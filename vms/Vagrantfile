@@ -1,14 +1,16 @@
 MASTER_NUM=1
-WORKER_NUM=2
+WORKER_NUM=0
 IP_BASE="192.168.56."
 IP_START=2
-SIDE_OS=2
+SIDE_OS=0
+SIZE=50
 
 
 Vagrant.configure("2") do |config|
 
   config.vm.box = "bento/ubuntu-22.04"
   config.vbguest.auto_update = false
+  config.vm.disk :disk, size: "#{SIZE}GB", primary: true
   
   config.vm.provision "shell", env: {"IP_BASE" => IP_BASE, "MASTER_NUM" => MASTER_NUM, "WORKER_NUM" => WORKER_NUM, "IP_START" => IP_START}, inline: <<-SHELL
       #set -euxo pipefail
@@ -88,8 +90,8 @@ Vagrant.configure("2") do |config|
       worker.vm.provision "shell", path: "scripts/worker.sh"
       worker.vm.provider "virtualbox" do |v|
         v.name = "worker-0#{i}"
-        v.memory = 7168
-        v.cpus = 3
+        v.memory = 8192
+        v.cpus = 4
       end
     end
   end
