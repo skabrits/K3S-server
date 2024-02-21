@@ -1,8 +1,8 @@
 MASTER_NUM=1
-WORKER_NUM=0
+WORKER_NUM=2
 IP_BASE="192.168.56."
 IP_START=2
-SIDE_OS=0
+SIDE_OS=2
 
 
 Vagrant.configure("2") do |config|
@@ -88,8 +88,8 @@ Vagrant.configure("2") do |config|
       worker.vm.provision "shell", path: "scripts/worker.sh"
       worker.vm.provider "virtualbox" do |v|
         v.name = "worker-0#{i}"
-        v.memory = 8192
-        v.cpus = 4
+        v.memory = 7168
+        v.cpus = 3
       end
     end
   end
