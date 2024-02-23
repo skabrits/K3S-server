@@ -22131,6 +22131,8 @@ spec:
         - /usr/local/bin/argocd-server
         - --rootpath
         - /cd
+        - --basehref
+        - /cd
         env:
         - name: ARGOCD_SERVER_INSECURE
           valueFrom:
