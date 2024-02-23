@@ -19,5 +19,5 @@ LBIP="$(avahi-resolve -n4 LoadBalancer.local | awk '{print $2}')"
 
 sudo ufw disable
 
-curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="777" INSTALL_K3S_VERSION="v1.26.13+k3s2" INSTALL_K3S_EXEC="--node-ip=${IPADDR} --node-external-ip=${IPADDR} --node-label 'has-gpu=gforce'" K3S_URL="https://${LBIP}:6443" K3S_TOKEN=SECRET sh -
+curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="777" INSTALL_K3S_VERSION="v1.26.13+k3s2" INSTALL_K3S_EXEC="--node-ip=${IPADDR} --node-external-ip=${IPADDR} --node-label has-gpu=gforce" K3S_URL="https://${LBIP}:6443" K3S_TOKEN=SECRET sh -
 
