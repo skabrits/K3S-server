@@ -17,6 +17,15 @@ spec:
       selfHeal: true
       allowEmpty: true
   project: default
+  ignoreDifferences:
+  - group: rbac.authorization.k8s.io
+    kind: ClusterRole
+    jsonPointers:
+      - /rules
+  - group: kyverno.io
+    kind: ClusterPolicy
+    jqPathExpressions:
+      - .spec.rules[] | select(.name|test("autogen-."))
   source:
     path: "./"
     repoURL: https://github.com/skabrits/SYS.git
