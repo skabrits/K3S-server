@@ -22133,7 +22133,6 @@ spec:
       containers:
       - args:
         - /usr/local/bin/argocd-server
-        - --insecure-skip-tls-verify
         env:
         - name: ARGOCD_SERVER_INSECURE
           valueFrom:
