@@ -21102,6 +21102,7 @@ metadata:
 data:
   server.basehref: /cd
   server.rootpath: /cd
+  server.sync.wavedelay: 30
   #server.staticassets: /cd/shared/app
 ---
 apiVersion: v1
@@ -22134,6 +22135,12 @@ spec:
       - args:
         - /usr/local/bin/argocd-server
         env:
+        - name: ARGOCD_SYNC_WAVE_DELAY
+          valueFrom:
+            configMapKeyRef:
+              key: server.sync.wavedelay
+              name: argocd-cmd-params-cm
+              optional: true
         - name: ARGOCD_SERVER_INSECURE
           valueFrom:
             configMapKeyRef:
