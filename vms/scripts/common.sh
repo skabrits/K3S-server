@@ -4,6 +4,7 @@ sudo swapoff -a
 
 # keeps the swaf off during reboot
 (crontab -l 2>/dev/null; echo "@reboot /sbin/swapoff -a") | crontab - || true
+(crontab -l 2>/dev/null; echo "* * * * * \`route -n | awk '{ if (\$8 ==\"eth0\" && \$2 != \"0.0.0.0\") print \"route del default gw \" \$2; }'\`") | crontab - || true
 
 sudo growpart /dev/sda 3
 sudo lvextend -l +100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv
