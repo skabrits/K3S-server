@@ -1,5 +1,10 @@
 #!/bin/bash
 
+a="$(grep "GRUB_CMDLINE_LINUX=" /etc/default/grub)"
+b=$(echo $a | sed "s/hugepagesz=1G hugepages=2 hugepagesz=2M hugepages=1024 //g" | sed 's/"[^"]*$/hugepagesz=1G hugepages=2 hugepagesz=2M hugepages=1024 "/g')
+sudo sed -i "s/$a/$b/g" /etc/default/grub
+sudo update-grub
+
 ip a show eno1 | grep "inet " | awk '{print $2}' | cut -d / -f1
 IPADDR=$(ip a show eno1 | grep "inet " | awk '{print $2}' | cut -d / -f1)
 while [ -z $IPADDR ] 
@@ -20,4 +25,6 @@ LBIP="$(avahi-resolve -n4 LoadBalancer.local | awk '{print $2}')"
 sudo ufw disable
 
 curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="777" INSTALL_K3S_VERSION="v1.31.1+k3s1" INSTALL_K3S_EXEC="--node-ip=${IPADDR} --node-external-ip=${IPADDR} --node-label has-gpu=gforce" K3S_URL="https://${LBIP}:6443" K3S_TOKEN=SECRET sh -
+
+sudo reboot
 
