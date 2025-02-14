@@ -1,5 +1,10 @@
 #!/bin/bash
 
+a="$(grep "GRUB_CMDLINE_LINUX=" /etc/default/grub)"
+b=$(echo $a | sed "s/hugepagesz=1G hugepages=2 hugepagesz=2M hugepages=1024//g" | sed 's/"[^"]*$/hugepagesz=1G hugepages=2 hugepagesz=2M hugepages=1024"/g')
+sed -i "s/$a/$b/g" /etc/default/grub
+update-grub
+
 ip a show eth1 | grep "inet " | awk '{print $2}' | cut -d / -f1
 IPADDR=$(ip a show eth1 | grep "inet " | awk '{print $2}' | cut -d / -f1)
 while [ -z $IPADDR ] 
